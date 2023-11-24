@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Игра Бекса</title>
+    <style>
+        /* Основные стили */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: #f7f7f7;
+            color: #333;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #ff007f;
+        }
+
+        #puzzles {
+            width: 90%;
+            max-width: 400px;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        p {
+            margin: 0;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .answer {
+            width: calc(100% - 40px);
+            padding: 8px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 10px 20px;
+            border-radius: 5px;
+            background-color: #ff007f;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #d6006c;
+        }
+
+        /* Модальное окно */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            width: 80%;
+            max-width: 400px;
+            margin: 15% auto;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+
+        .close {
+            color: #888;
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
+        }
+
+        .message {
+            font-size: 20px;
+        }
+
+        .heart {
+            color: #ff007f;
+        }
+
+        /* Стили для выделения ошибочного поля */
+        .error {
+            border: 1px solid #ff0000;
+            box-shadow: 0 0 5px #ff0000;
+        }
+    </style>
+</head>
+<body>
+    <h1>Игра Бекса</h1>
+
+    <div id="puzzles">
+        <div id="puzzle1">
+            <p>Вопрос 1: Как меня зовут?</p>
+            <input type="text" class="answer" placeholder="Ответ">
+        </div>
+
+        <div id="puzzle2">
+            <p>Вопрос 2: Какой у меня ник в Instagram?</p>
+            <input type="text" class="answer" placeholder="Ответ">
+        </div>
+
+        <div id="puzzle3">
+            <p>Вопрос 3: Кто для меня самая красивая девушка на свете? напиши её ник в instagram</p>
+            <input type="text" class="answer" placeholder="Ответ">
+        </div>
+
+        <button onclick="checkAnswers()">Проверить</button>
+    </div>
+
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <p class="message" id="modalMessage">Ты самая умная девушка на свете <span class="heart">&#10084;</span></p>
+        </div>
+    </div>
+
+    <script>
+        function checkAnswers() {
+            let answers = document.querySelectorAll('.answer');
+            let correctAnswers = ['бексунтай', '_bqlqpqn', 'di_dino_a']; // Измененный ответ на третий вопрос
+
+            let allCorrect = true;
+
+            answers.forEach((answer, index) => {
+                if (answer.value.trim().toLowerCase() !== correctAnswers[index]) {
+                    answer.classList.add('error'); // Добавляем класс для выделения ошибочного поля
+                    allCorrect = false;
+                } else {
+                    answer.classList.remove('error'); // Удаляем класс, если ответ верный
+                }
+            });
+
+            if (allCorrect) {
+                document.getElementById('myModal').style.display = 'block';
+            } else {
+                alert('Неправильно. Попробуйте угадать снова.');
+            }
+        }
+
+        function closeModal() {
+            document.getElementById('myModal').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
